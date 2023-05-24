@@ -1,13 +1,9 @@
-#import bookshelf_db
-
-import tkinter as tk
 import customtkinter
 import os
 from PIL import Image
 
 customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
-
 
 class App(customtkinter.CTk):
     def __init__(main):
@@ -74,7 +70,28 @@ class App(customtkinter.CTk):
         main.home.exit_button.grid(row=4, column=1, padx=5, pady=5, sticky='NSEW')
 
     def create_diary_frame(main):
-        pass
+        main.diary = customtkinter.CTkFrame(main)
+        main.diary.grid(row=0, column=0, sticky="nsew")
+
+        main.diary.columnconfigure(index=0, minsize=300)
+        main.diary.columnconfigure(index=1, minsize=300)
+        main.diary.rowconfigure(index=0, minsize=50)
+        main.diary.rowconfigure(index=1, minsize=200)
+        main.diary.rowconfigure(index=2, minsize=150)
+
+        image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "img")
+
+        main.diary.logo_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "dairy_label.png")), size=(500,50))
+        main.diary.back_button_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "back_button.png")), size=(200, 50))
+
+        main.diary.logo = customtkinter.CTkLabel(main.diary, text="", image=main.diary.logo_image)
+        main.diary.logo.grid(row=0, column=0, sticky='NSEW', columnspan = 2, pady=10)
+        
+        main.diary.diary_table = customtkinter.CTkLabel(main.diary, text=create_db.print_dairy_data())
+        main.diary.diary_table.grid(row=1, column=0, sticky='NSEW', columnspan = 2)
+
+        main.diary.back_button = customtkinter.CTkButton(main.diary, command=main.back_button_event, fg_color="transparent", text = '', image=main.diary.back_button_image, hover_color="#e5e5e5")
+        main.diary.back_button.grid(row=2, column=1, sticky='S')
 
     def create_add_book_frame(main):
         pass
