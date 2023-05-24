@@ -1,3 +1,10 @@
+from tkinter import *
+from tkinter import ttk
+import customtkinter
+from CTkTable import *
+
+# https://github.com/Akascape/CTkTable/blob/main/README.md
+
 import customtkinter
 import os
 from PIL import Image
@@ -26,7 +33,6 @@ class App(customtkinter.CTk):
         main.create_home_frame()
 
     ### create frame ###
-
     def create_home_frame(main):
         ### create home frame ###
 
@@ -70,11 +76,12 @@ class App(customtkinter.CTk):
         main.home.exit_button.grid(row=4, column=1, padx=5, pady=5, sticky='NSEW')
 
     def create_diary_frame(main):
+        main.geometry(f"{730}x{600}")
         main.diary = customtkinter.CTkFrame(main)
         main.diary.grid(row=0, column=0, sticky="nsew")
-
-        main.diary.columnconfigure(index=0, minsize=300)
-        main.diary.columnconfigure(index=1, minsize=300)
+        data = [('Федор Михайлович Достоевский', 'Записки из подполья', 7, 'Прочитана'), ('Федор Михайлович Достоевский', 'Игрок', 9, 'Прочитана'), ('Федор Михайлович Достоевский', 'Бедные люди', 6, 'Прочитана'), ('Федор Михайлович Достоевский', 'Записки из Мертвого дома', 5, 'Прочитана'), ('Федор Михайлович Достоевский', 'Сон смешного человека', 6, 'Прочитана'), ('Эрих Мария Ремарк', 'На Западном фронте без перемен', 4, 'Прочитана'), ('Эрих Мария Ремарк', 'Три товарища', 5, 'Прочитана'), ('Эрих Мария Ремарк', 'Триумфальная арка', 9, 'Прочитана'), ('Эрих Мария Ремарк', 'Жизнь взаймы', 4, 'Прочитана'), ('Эрих Мария Ремарк', 'Искра жизни', 5, 'Прочитана'), ('Борис Леонидович Пастернак', 'Доктор Живаго', 3, 'Прочитана'), ('Николай Васильевич Гоголь', 'Мёртвые души', 8, 'Прочитана'), ('Николай Васильевич Гоголь', 'Шинель', 9, 'Прочитана'), ('Николай Васильевич Гоголь', 'Тарас Бульба', 7, 'Прочитана'), ('Николай Васильевич Гоголь', 'Вий', 10, 'Прочитана'), ('Николай Васильевич Гоголь', 'Вечера на хуторе близ Диканьки', 10, 'Прочитана')]
+        main.diary.columnconfigure(index=0, minsize=200)
+        main.diary.columnconfigure(index=1, minsize=200)
         main.diary.rowconfigure(index=0, minsize=50)
         main.diary.rowconfigure(index=1, minsize=200)
         main.diary.rowconfigure(index=2, minsize=150)
@@ -87,8 +94,17 @@ class App(customtkinter.CTk):
         main.diary.logo = customtkinter.CTkLabel(main.diary, text="", image=main.diary.logo_image)
         main.diary.logo.grid(row=0, column=0, sticky='NSEW', columnspan = 2, pady=10)
         
-        main.diary.diary_table = customtkinter.CTkLabel(main.diary, text=create_db.print_dairy_data())
-        main.diary.diary_table.grid(row=1, column=0, sticky='NSEW', columnspan = 2)
+        columns = ("name", "name_book", "grade", "name_status" )
+        main.diary.diary_table = CTkTable(main.diary, column=4, values=data, colors = ['#0D0D0D','#0D0D0D'])
+        main.diary.scrollbar = ttk.Scrollbar(main.diary, command=main.diary.diary_table)
+        main.diary.scrollbar.grid(row=1, column=0, sticky='NSEW', columnspan = 2)
+
+  
+
+
+
+        # for data_arr in data:
+        #     main.diary.diary_table.insert("", END, values=data_arr)
 
         main.diary.back_button = customtkinter.CTkButton(main.diary, command=main.back_button_event, fg_color="transparent", text = '', image=main.diary.back_button_image, hover_color="#e5e5e5")
         main.diary.back_button.grid(row=2, column=1, sticky='S')
