@@ -1,9 +1,10 @@
 import sqlite3
 
+
+
 with sqlite3.connect('bookshelf.db') as db:
     try:
         cursor = db.cursor()
-   
         cursor.execute("""
                         CREATE TABLE IF NOT EXISTS author (
                             author_id INTEGER PRIMARY KEY,
@@ -98,5 +99,8 @@ with sqlite3.connect('bookshelf.db') as db:
         db.commit()
     except sqlite3.Error as e:
         if db: db.rollback()
-        print("Ошибка выполнения запроса. Вероятно, таблица уже существует.")
+        print("Ошибка выполнения запроса на создание таблиц. Вероятно, таблица уже существует.")
 
+
+def print_dairy_data():
+    pass
