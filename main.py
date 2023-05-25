@@ -36,6 +36,7 @@ class App(customtkinter.CTk):
     def create_home_frame(main):
         ### create home frame ###
 
+        main.geometry(f"{600}x{450}")
         main.home = customtkinter.CTkFrame(main)
         main.home.grid(row=0, column=0, sticky="nsew")
 
@@ -76,10 +77,11 @@ class App(customtkinter.CTk):
         main.home.exit_button.grid(row=4, column=1, padx=5, pady=5, sticky='NSEW')
 
     def create_diary_frame(main):
+        
         main.geometry(f"{730}x{600}")
         main.diary = customtkinter.CTkFrame(main)
         main.diary.grid(row=0, column=0, sticky="nsew")
-        data = [('Федор Михайлович Достоевский', 'Записки из подполья', 7, 'Прочитана'), ('Федор Михайлович Достоевский', 'Игрок', 9, 'Прочитана'), ('Федор Михайлович Достоевский', 'Бедные люди', 6, 'Прочитана'), ('Федор Михайлович Достоевский', 'Записки из Мертвого дома', 5, 'Прочитана'), ('Федор Михайлович Достоевский', 'Сон смешного человека', 6, 'Прочитана'), ('Эрих Мария Ремарк', 'На Западном фронте без перемен', 4, 'Прочитана'), ('Эрих Мария Ремарк', 'Три товарища', 5, 'Прочитана'), ('Эрих Мария Ремарк', 'Триумфальная арка', 9, 'Прочитана'), ('Эрих Мария Ремарк', 'Жизнь взаймы', 4, 'Прочитана'), ('Эрих Мария Ремарк', 'Искра жизни', 5, 'Прочитана'), ('Борис Леонидович Пастернак', 'Доктор Живаго', 3, 'Прочитана'), ('Николай Васильевич Гоголь', 'Мёртвые души', 8, 'Прочитана'), ('Николай Васильевич Гоголь', 'Шинель', 9, 'Прочитана'), ('Николай Васильевич Гоголь', 'Тарас Бульба', 7, 'Прочитана'), ('Николай Васильевич Гоголь', 'Вий', 10, 'Прочитана'), ('Николай Васильевич Гоголь', 'Вечера на хуторе близ Диканьки', 10, 'Прочитана')]
+        data = 
         main.diary.columnconfigure(index=0, minsize=200)
         main.diary.columnconfigure(index=1, minsize=200)
         main.diary.rowconfigure(index=0, minsize=50)
@@ -110,9 +112,10 @@ class App(customtkinter.CTk):
         main.diary.back_button.grid(row=2, column=1, sticky='S')
 
     def create_add_book_frame(main):
-        pass
+        main.geometry(f"{600}x{450}")
 
     def create_about_frame(main):
+        main.geometry(f"{600}x{450}")
         main.about = customtkinter.CTkFrame(main)
         main.about.grid(row=0, column=0, sticky="nsew")
 

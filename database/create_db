@@ -1,7 +1,7 @@
 import sqlite3
 
 
-def create_db():
+def create_all():
     with sqlite3.connect('bookshelf.db') as db:
         try:
             cursor = db.cursor()
