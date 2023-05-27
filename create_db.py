@@ -123,4 +123,5 @@ def print_dairy_data():
         except sqlite3.Error as e:
             if db: db.rollback()
             print("Ошибка выполнения запроса на выборку dairy.")
-print(print_dairy_data())
+
+create_all()

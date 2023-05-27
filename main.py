@@ -3,11 +3,14 @@ from tkinter import ttk
 import customtkinter
 from CTkTable import *
 
+
 # https://github.com/Akascape/CTkTable/blob/main/README.md
 
 import customtkinter
 import os
 from PIL import Image
+import create_db 
+
 
 customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -22,7 +25,7 @@ class App(customtkinter.CTk):
         main.geometry(f"{600}x{450}")
 
         x = (main.winfo_screenwidth() - main.winfo_reqwidth()) / 4
-        y = (main.winfo_screenheight() - main.winfo_reqheight()) / 4
+        y = 0
 
         main.wm_geometry("+%d+%d" % (x, y))
         main.resizable(False, False)
@@ -37,6 +40,7 @@ class App(customtkinter.CTk):
         ### create home frame ###
 
         main.geometry(f"{600}x{450}")
+
         main.home = customtkinter.CTkFrame(main)
         main.home.grid(row=0, column=0, sticky="nsew")
 
@@ -78,15 +82,18 @@ class App(customtkinter.CTk):
 
     def create_diary_frame(main):
         
-        main.geometry(f"{730}x{600}")
+        main.geometry(f"{800}x{600}")
+                
         main.diary = customtkinter.CTkFrame(main)
         main.diary.grid(row=0, column=0, sticky="nsew")
-        data = 
-        main.diary.columnconfigure(index=0, minsize=200)
-        main.diary.columnconfigure(index=1, minsize=200)
-        main.diary.rowconfigure(index=0, minsize=50)
-        main.diary.rowconfigure(index=1, minsize=200)
-        main.diary.rowconfigure(index=2, minsize=150)
+        data = create_db.print_dairy_data()
+
+        main.diary.columnconfigure(index=0, minsize=400)
+        main.diary.columnconfigure(index=1, minsize=400)
+
+        main.diary.rowconfigure(index=0, minsize=70)
+        main.diary.rowconfigure(index=1, minsize=430)
+        main.diary.rowconfigure(index=2, minsize=100)
 
         image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "img")
 
@@ -96,20 +103,8 @@ class App(customtkinter.CTk):
         main.diary.logo = customtkinter.CTkLabel(main.diary, text="", image=main.diary.logo_image)
         main.diary.logo.grid(row=0, column=0, sticky='NSEW', columnspan = 2, pady=10)
         
-        columns = ("name", "name_book", "grade", "name_status" )
-        main.diary.diary_table = CTkTable(main.diary, column=4, values=data, colors = ['#0D0D0D','#0D0D0D'])
-        main.diary.scrollbar = ttk.Scrollbar(main.diary, command=main.diary.diary_table)
-        main.diary.scrollbar.grid(row=1, column=0, sticky='NSEW', columnspan = 2)
-
-  
-
-
-
-        # for data_arr in data:
-        #     main.diary.diary_table.insert("", END, values=data_arr)
-
         main.diary.back_button = customtkinter.CTkButton(main.diary, command=main.back_button_event, fg_color="transparent", text = '', image=main.diary.back_button_image, hover_color="#e5e5e5")
-        main.diary.back_button.grid(row=2, column=1, sticky='S')
+        main.diary.back_button.grid(row=2, column=1, sticky='NSEW')
 
     def create_add_book_frame(main):
         main.geometry(f"{600}x{450}")
