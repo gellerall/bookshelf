@@ -35,9 +35,8 @@ class App(customtkinter.CTk):
 
         main.create_home_frame()
 
-    ### create frame ###
+
     def create_home_frame(main):
-        ### create home frame ###
 
         main.geometry(f"{600}x{450}")
 
@@ -80,10 +79,70 @@ class App(customtkinter.CTk):
         main.home.exit_button = customtkinter.CTkButton(main.home, command=main.exit_button_event, fg_color="transparent", text = '', image=main.home.exit_button_image, hover_color="#e5e5e5")
         main.home.exit_button.grid(row=4, column=1, padx=5, pady=5, sticky='NSEW')
 
+
+    def create_diary_frame_2v(main):
+
+        main.geometry(f"{1200}x{610}")
+
+        image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "img")
+        main.bg_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "bg_diary.png")), size=(1200, 610))
+        
+        main.diary = customtkinter.CTkFrame(main)
+        main.diary.grid(row=0, column=0, sticky="nsew")
+        data = create_db.print_dairy_data()
+
+        main.diary.columnconfigure(index=0, minsize=320)
+        main.diary.columnconfigure(index=1, minsize=520)
+        main.diary.columnconfigure(index=2, minsize=180)
+        main.diary.columnconfigure(index=3, minsize=180)
+
+        main.diary.rowconfigure(index=0, minsize=90)
+        main.diary.rowconfigure(index=1, minsize=420)
+        main.diary.rowconfigure(index=2, minsize=100)
+
+        
+        main.diary.add_book_button_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "add_book_button.png")), size=(130, 40))
+        main.diary.back_button_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "back_button.png")), size=(130, 40))
+        main.diary.exit_button_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "exit_button.png")), size=(130, 40))
+        
+
+        main.diary.add_book_button = customtkinter.CTkButton(main.diary, command=main.add_book_button_event, fg_color="transparent", text = '', image=main.diary.add_book_button_image, hover_color="#e5e5e5")
+        main.diary.add_book_button.grid(row=0, column=3, sticky='NSEW')
+
+        main.diary.back_button = customtkinter.CTkButton(main.diary, command=main.back_button_event, fg_color="transparent", text = '', image=main.diary.back_button_image, hover_color="#e5e5e5")
+        main.diary.back_button.grid(row=2, column=2, sticky='NSEW')
+
+        main.diary.exit_button = customtkinter.CTkButton(main.diary, command=main.exit_button_event, fg_color="transparent", text = '', image=main.diary.exit_button_image, hover_color="#e5e5e5")
+        main.diary.exit_button.grid(row=2, column=3, sticky='NSEW')
+
+        main.diary.table = ttk.Treeview(main.diary, show='', padding=10)
+        main.diary.table.grid(row=1, column=1, sticky='NSEW', columnspan = 3)
+        heads = ['Автор', 'Произведение', 'Оценка', 'Статус']
+        main.diary.table['columns'] = heads
+
+        style = ttk.Style()
+        style.theme_use("clam")
+        style.configure("Treeview.Columns", font=('Sunday', 20), rowheight=100)
+        style.configure('Treeview', font=('Sunday', 13), rowheight=40, background="#e5e5e5", 
+                fieldbackground="e5e5e5", foreground="black")
+
+        for header in heads:
+            main.diary.table.heading(header, text = header, anchor='center')
+            main.diary.table.column(header, width = 250)
+            
+        main.diary.table.column('Оценка', width = 90, anchor='center')
+        main.diary.table.column('Статус', width = 120, anchor='center')
+
+        main.diary.table['displaycolumn'] = ['Произведение', 'Автор', 'Оценка','Статус']
+
+        for row in data:
+            main.diary.table.insert('', 'end', values=row)
+        print(data)
+
     def create_diary_frame(main):
         
-        main.geometry(f"{800}x{600}")
-                
+        #main.geometry(f"{800}x{600}")
+
         main.diary = customtkinter.CTkFrame(main)
         main.diary.grid(row=0, column=0, sticky="nsew")
         data = create_db.print_dairy_data()
@@ -98,13 +157,39 @@ class App(customtkinter.CTk):
         image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "img")
 
         main.diary.logo_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "dairy_label.png")), size=(500,50))
-        main.diary.back_button_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "back_button.png")), size=(200, 50))
+        main.diary.back_button_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "back_button.png")), size=(120, 30))
+
+        main.diary.headers_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "headers.png")), size=(800, 60))
 
         main.diary.logo = customtkinter.CTkLabel(main.diary, text="", image=main.diary.logo_image)
         main.diary.logo.grid(row=0, column=0, sticky='NSEW', columnspan = 2, pady=10)
         
         main.diary.back_button = customtkinter.CTkButton(main.diary, command=main.back_button_event, fg_color="transparent", text = '', image=main.diary.back_button_image, hover_color="#e5e5e5")
         main.diary.back_button.grid(row=2, column=1, sticky='NSEW')
+
+        main.diary.table = ttk.Treeview(main.diary, show='headings', padding=10)
+        main.diary.table.grid(row=1, column=0, sticky='NSEW', columnspan = 2)
+        heads = ['Автор', 'Произведение', 'Оценка', 'Статус']
+        main.diary.table['columns'] = heads
+
+        style = ttk.Style()
+        style.theme_use("clam")
+        style.configure("Treeview.Columns", font=('Sunday', 20), rowheight=100)
+        style.configure('Treeview', font=('Sunday', 13), rowheight=40, background="#e5e5e5", 
+                fieldbackground="e5e5e5", foreground="black")
+
+        for header in heads:
+            main.diary.table.heading(header, text = header, anchor='center')
+            main.diary.table.column(header, width = 250)
+            
+        main.diary.table.column('Оценка', width = 90, anchor='center')
+        main.diary.table.column('Статус', width = 120, anchor='center')
+
+        main.diary.table['displaycolumn'] = ['Произведение', 'Автор', 'Оценка','Статус']
+
+        for row in data:
+            main.diary.table.insert('', 'end', values=row)
+        print(data)
 
     def create_add_book_frame(main):
         main.geometry(f"{600}x{450}")
@@ -138,9 +223,11 @@ class App(customtkinter.CTk):
     ### create button event ###
 
     def diary_button_event(main):
-        main.create_diary_frame()
+        create_db.create_all()
+        main.create_diary_frame_2v()
 
     def add_book_button_event(main):
+        create_db.create_all()
         main.create_add_book_frame()
 
     def about_button_event(main):
